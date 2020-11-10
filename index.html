@@ -3,7 +3,11 @@
 
 <head>
   <meta charset="utf-8" />
-  <script async src="https://cdn.ampproject.org/v0.js"></script>
+
+  <link rel="icon" 
+      type="image/png" 
+      href="https://raw.githubusercontent.com/tkaden4/movie-searcher-challenge/master/favicon.ico">
+      <script async src="https://cdn.ampproject.org/v0.js"></script>
   <script async custom-element="amp-list" src="https://cdn.ampproject.org/v0/amp-list-0.1.js"></script>
   <script custom-template="amp-mustache" src="https://cdn.ampproject.org/v0/amp-mustache-0.2.js" async></script>
   <script async custom-element="amp-bind" src="https://cdn.ampproject.org/v0/amp-bind-0.1.js"></script>
@@ -167,32 +171,32 @@
       }
     </script>
   </amp-state>
-  <amp-state id="results" [src]="'https://www.omdbapi.com/?apikey=' + api.omdbKey + '&s=' + search.searchText">
+  <amp-state id="results" [src]="'https://www.omdbapi.com/?apikey=' + api.omdbKey + '&s=' + search.searchText + '&page=' + (results.Page || 1)">
     <script type="application/json">
       {
+        "Page": 1,
         "Search": []
       }
     </script>
   </amp-state>
   <header id="header">
-    <amp-img src="/movie-reel.svg" height="30" width="30"></amp-img>
+    <amp-img src="https://raw.githubusercontent.com/tkaden4/movie-searcher-challenge/eb94a0fb4c4436b8f1d4c5e2ccca1f5ff5c3f053/movie-reel.svg" height="30" width="30"></amp-img>
     &nbsp;
     <h1 style="margin: 0; display: inline;">FlickDB</h1>
   </header>
   <div id="search">
     <input id="search-text" name="search-text" placeholder="Search movies..." type="text"
-      on="input-debounced:AMP.setState({ search: { searchText: event.value }, results: { Search: [], totalResults: null, Response: null }}),searchResults.changeToLayoutContainer()"></input>
+      on="input-debounced:AMP.setState({ search: { searchText: event.value }, results: { Search: [], totalResults: null, Response: null, Page: 1 }}),searchResults.changeToLayoutContainer()"></input>
   </div>
   <div class="container">
     <div id="results">
       <h3 [text]="results.totalResults != null ? results.totalResults + ' results' : ''"></h3>
-      <amp-list id="searchResults" width="auto" height="500" layout="fixed-height" [src]="results.Search" items="." single-item binding="no" reset-on-refresh>
-        <div fallback id="results-fallback">Failed to load movies</div>
+      <amp-list id="searchResults" load-more-src="next" load-more="auto" width="auto" height="500" layout="fixed-height" [src]="results.Search" items="." single-item binding="no" reset-on-refresh>
         <template type="amp-mustache">
           <div class="movie-entry">
             <div class="movie-title">{{ Title }}</div>
             <amp-img alt="{{ Title }}" src="{{ Poster }}" width="300" height="447" layout="responsive">
-              <amp-img fallback src="/placeholder-image.png" width="300" height="447" layout="responsive">
+              <amp-img fallback src="https://raw.githubusercontent.com/tkaden4/movie-searcher-challenge/master/placeholder-image.png" width="300" height="447" layout="responsive">
               </amp-img>
             </amp-img>
           </div>
