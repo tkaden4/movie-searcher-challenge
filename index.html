@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html amp lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <script async src="https://cdn.ampproject.org/v0.js"></script>
+    <script async custom-element="amp-list" src="https://cdn.ampproject.org/v0/amp-list-0.1.js"></script>
+    <script custom-template="amp-mustache" src="https://cdn.ampproject.org/v0/amp-mustache-0.2.js" async></script>
+    <script async custom-element="amp-bind" src="https://cdn.ampproject.org/v0/amp-bind-0.1.js"></script>
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1" />
+    <title>FlickDB</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
+    <!-- this should refer to an actual document -->
+    <link rel="canonical" href="/" />
+    <!-- <script type="application/ld+json">
+      {
+        "@context": "http://schema.org",
+        "@type": "NewsArticle",
+        "headline": "Open-source framework for publishing content",
+        "datePublished": "2015-10-07T12:02:41Z",
+        "image": ["logo.jpg"]
+      }
+    </script> -->
+    <style amp-boilerplate>
+      body {
+        -webkit-animation: -amp-start 8s steps(1, end) 0s 1 normal both;
+        -moz-animation: -amp-start 8s steps(1, end) 0s 1 normal both;
+        -ms-animation: -amp-start 8s steps(1, end) 0s 1 normal both;
+        animation: -amp-start 8s steps(1, end) 0s 1 normal both;
+      }
+
+      @-webkit-keyframes -amp-start {
+        from {
+          visibility: hidden;
+        }
+
+        to {
+          visibility: visible;
+        }
+      }
+
+      @-moz-keyframes -amp-start {
+        from {
+          visibility: hidden;
+        }
+
+        to {
+          visibility: visible;
+        }
+      }
+
+      @-ms-keyframes -amp-start {
+        from {
+          visibility: hidden;
+        }
+
+        to {
+          visibility: visible;
+        }
+      }
+
+      @-o-keyframes -amp-start {
+        from {
+          visibility: hidden;
+        }
+
+        to {
+          visibility: visible;
+        }
+      }
+
+      @keyframes -amp-start {
+        from {
+          visibility: hidden;
+        }
+
+        to {
+          visibility: visible;
+        }
+      }
+    </style>
+
+    <noscript>
+      <style amp-boilerplate>
+        body {
+          -webkit-animation: none;
+          -moz-animation: none;
+          -ms-animation: none;
+          animation: none;
+        }
+      </style>
+    </noscript>
+    <style amp-custom>
+      * {
+        font-family: "Roboto";
+        box-sizing: border-box;
+      }
+      body {
+        max-width: 768px;
+        padding: 15px;
+        margin: auto;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- TODO remove  -->
+    <amp-state id="api" src="/api-key.json"></amp-state>
+    <h1>FlickDB</h1>
+    <div>
+      <h2>Search</h2>
+      <input type="text" on="change:AMP.setState({ searchValue: event.value })"></input>
+    </div>
+    <amp-list
+      width="auto"
+      height="500"
+      layout="fixed-height"
+      items="Search"
+      [src]="'https://www.omdbapi.com/?apikey=' + api.omdbKey + '&s=' + searchValue"
+    >
+      <div fallback class="results-fallback">Failed to load movies</div>
+      <template type="amp-mustache">
+        <div class="movie-entry">
+          <h2>{{ Title }}</h2>
+          <amp-img alt="{{ Title }}" src="{{ Poster }}" width="300" height="447" layout="responsive"></amp-img>
+        </div>
+      </template>
+    </amp-list>
+  </body>
+</html>
