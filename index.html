@@ -108,9 +108,11 @@
     <h1>FlickDB</h1>
     <div>
       <h2>Search</h2>
-      <input type="text" on="change:AMP.setState({ searchValue: event.value })"></input>
+      <input type="text" on="input-throttled:AMP.setState({ searchValue: event.value })"></input>
     </div>
     <amp-list
+      id="searchResults"
+      reset-on-refresh
       width="auto"
       height="500"
       layout="fixed-height"
