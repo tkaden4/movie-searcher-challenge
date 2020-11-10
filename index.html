@@ -8,10 +8,10 @@
   <script custom-template="amp-mustache" src="https://cdn.ampproject.org/v0/amp-mustache-0.2.js" async></script>
   <script async custom-element="amp-bind" src="https://cdn.ampproject.org/v0/amp-bind-0.1.js"></script>
   <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1" />
-  <title>FlickDB</title>
+  <title>FlickDB | Discover Movies</title>
   <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
   <!-- this should refer to an actual document -->
-  <link rel="canonical" href="/" />
+  <link rel="canonical" href="/index.html" />
   <!-- <script type="application/ld+json">
       {
         "@context": "http://schema.org",
@@ -95,7 +95,9 @@
       font-family: "Roboto";
       box-sizing: border-box;
     }
-    body, html {
+
+    body,
+    html {
       margin: 0;
       padding: 0;
     }
@@ -143,6 +145,10 @@
       font-size: 1.5em;
     }
   </style>
+
+</head>
+
+<body>
   <amp-state id="api" src="/api-key.json"></amp-state>
   <amp-state id="search">
     <script type="application/json">
@@ -151,26 +157,27 @@
       }
     </script>
   </amp-state>
-</head>
-
-<body>
   <header id="header">
     <amp-img src="/movie-reel.svg" height="30" width="30"></amp-img>
     &nbsp;
     <h1 style="margin: 0; display: inline;">FlickDB</h1>
   </header>
   <div id="search">
-    <input id="search-text" name="search-text" placeholder="Search movies..." type="text" on="input-debounced:AMP.setState({ search: { searchText: event.value }})"></input>
+    <input id="search-text" name="search-text" placeholder="Search movies..." type="text"
+      on="input-debounced:AMP.setState({ search: { searchText: event.value }})"></input>
   </div>
   <div class="container">
 
-    <amp-list id="searchResults" width="auto" height="500" layout="fixed-height" items="Search"
+    <amp-list id="searchResults" [hidden]="search.searchText == ''" width="auto" height="500" layout="fixed-height" items="Search" binding="no"
       [src]="'https://www.omdbapi.com/?apikey=' + api.omdbKey + '&s=' + search.searchText" reset-on-refresh>
       <div fallback class="results-fallback">Failed to load movies</div>
       <template type="amp-mustache">
         <div class="movie-entry">
           <div class="movie-title">{{ Title }}</div>
-          <amp-img alt="{{ Title }}" src="{{ Poster }}" width="300" height="447" layout="responsive"></amp-img>
+          <amp-img alt="{{ Title }}" src="{{ Poster }}" width="300" height="447" layout="responsive">
+            <amp-img fallback src="https://via.placeholder.com/300x447" width="300" height="447" layout="responsive">
+            </amp-img>
+          </amp-img>
         </div>
         <hr />
       </template>
