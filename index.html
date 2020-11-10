@@ -120,7 +120,7 @@
       padding: 5px;
       border: 1px solid grey;
       border-radius: 5px;
-      transition: border-color 0.2s;
+      transition: border-color 200ms;
     }
 
     #search-text:focus {
@@ -135,6 +135,8 @@
 
     .movie-entry {
       margin: 20px 0;
+      padding: 10px;
+      background-color: #eaeaec;
     }
 
     .movie-title {
@@ -158,7 +160,7 @@
     <h1 style="margin: 0; display: inline;">FlickDB</h1>
   </header>
   <div id="search">
-    <input id="search-text" name="search-text" placeholder="Search movies..." type="text" on="input-throttled:AMP.setState({ search: { searchText: event.value }})"></input>
+    <input id="search-text" name="search-text" placeholder="Search movies..." type="text" on="input-debounced:AMP.setState({ search: { searchText: event.value }})"></input>
   </div>
   <div class="container">
 
@@ -170,6 +172,7 @@
           <div class="movie-title">{{ Title }}</div>
           <amp-img alt="{{ Title }}" src="{{ Poster }}" width="300" height="447" layout="responsive"></amp-img>
         </div>
+        <hr />
       </template>
     </amp-list>
   </div>
