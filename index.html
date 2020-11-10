@@ -103,21 +103,27 @@
   </head>
 
   <body>
-    <!-- TODO remove  -->
     <amp-state id="api" src="/api-key.json"></amp-state>
+    <amp-state id="search">
+      <script type="application/json">
+        {
+          "searchText": ""
+        }
+      </script>
+    </amp-state>
     <h1>FlickDB</h1>
     <div>
       <h2>Search</h2>
-      <input type="text" on="input-throttled:AMP.setState({ searchValue: event.value })"></input>
+      <input type="text" on="input-throttled:AMP.setState({ search: { searchText: event.value }})"></input>
     </div>
     <amp-list
       id="searchResults"
-      reset-on-refresh
       width="auto"
       height="500"
       layout="fixed-height"
       items="Search"
-      [src]="'https://www.omdbapi.com/?apikey=' + api.omdbKey + '&s=' + searchValue"
+      [src]="'https://www.omdbapi.com/?apikey=' + api.omdbKey + '&s=' + search.searchText"
+      reset-on-refresh
     >
       <div fallback class="results-fallback">Failed to load movies</div>
       <template type="amp-mustache">
