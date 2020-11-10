@@ -112,6 +112,10 @@
       padding: 10px;
     }
 
+    #results {
+      text-align: center;
+    }
+
     #search {
       text-align: center;
       background-color: #eaeaec;
@@ -163,6 +167,13 @@
       }
     </script>
   </amp-state>
+  <amp-state id="results" [src]="'https://www.omdbapi.com/?apikey=' + api.omdbKey + '&s=' + search.searchText">
+    <script type="application/json">
+      {
+        "Search": []
+      }
+    </script>
+  </amp-state>
   <header id="header">
     <amp-img src="/movie-reel.svg" height="30" width="30"></amp-img>
     &nbsp;
@@ -170,24 +181,26 @@
   </header>
   <div id="search">
     <input id="search-text" name="search-text" placeholder="Search movies..." type="text"
-      on="input-debounced:AMP.setState({ search: { searchText: event.value }})"></input>
+      on="input-debounced:AMP.setState({ search: { searchText: event.value }}),searchResults.changeToLayoutContainer()"></input>
   </div>
   <div class="container">
-    <amp-list id="searchResults" width="auto" height="500" layout="fixed-height" items="Search" binding="no"
-      [src]="search.searchText.length > 0 ? 'https://www.omdbapi.com/?apikey=' + api.omdbKey + '&s=' + search.searchText : ''"
-      reset-on-refresh>
-      <div fallback id="results-fallback">Failed to load movies</div>
-      <template type="amp-mustache">
-        <div class="movie-entry">
-          <div class="movie-title">{{ Title }}</div>
-          <amp-img alt="{{ Title }}" src="{{ Poster }}" width="300" height="447" layout="responsive">
-            <amp-img fallback src="https://via.placeholder.com/300x447" width="300" height="447" layout="responsive">
+    <div id="results">
+      <div [text]="results.totalResults + ' results'"></div>
+      <amp-list id="searchResults" width="auto" height="500" layout="fixed-height" [src]="results.Search" items="." single-item binding="no" reset-on-refresh>
+        <div fallback id="results-fallback">Failed to load movies</div>
+        <template type="amp-mustache">
+          <div class="movie-entry">
+            <div class="movie-title">{{ Title }}</div>
+            <amp-img alt="{{ Title }}" src="{{ Poster }}" width="300" height="447" layout="responsive">
+              <amp-img fallback src="/placeholder-image.png" width="300" height="447" layout="responsive">
+              </amp-img>
             </amp-img>
-          </amp-img>
-        </div>
-        <hr />
-      </template>
-    </amp-list>
+          </div>
+          <hr />
+        </template>
+      </amp-list>
+    </div>
+
   </div>
 
 </body>
