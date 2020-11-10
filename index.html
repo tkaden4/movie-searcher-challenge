@@ -153,6 +153,7 @@
       margin: 20px 0;
       padding: 10px;
       background-color: #eaeaec;
+      transition: opacity 1s;
     }
 
     .movie-title {
@@ -186,7 +187,7 @@
   </header>
   <div id="search">
     <input id="search-text" name="search-text" placeholder="Search movies..." type="text"
-      on="input-debounced:AMP.setState({ search: { searchText: event.value }, results: { Search: [], totalResults: null, Response: null, Page: 1 }}),searchResults.changeToLayoutContainer()"></input>
+      on="input-debounced:AMP.setState({ search: { searchText: event.value }, results: { Search: [], totalResults: null, Response: null }}),searchResults.changeToLayoutContainer()"></input>
   </div>
   <div class="container">
     <div id="results">
@@ -200,13 +201,9 @@
               </amp-img>
             </amp-img>
           </div>
-          <hr />
         </template>
       </amp-list>
     </div>
-
   </div>
-
 </body>
-
 </html>
