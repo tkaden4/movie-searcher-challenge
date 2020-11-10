@@ -129,6 +129,12 @@
       border-color: #77b3d4;
     }
 
+    #results-fallback {
+      /* todo change to actual color */
+      opacity: 0.7;
+      text-align: center;
+    }
+
     .container {
       max-width: 768px;
       padding: 15px;
@@ -167,10 +173,10 @@
       on="input-debounced:AMP.setState({ search: { searchText: event.value }})"></input>
   </div>
   <div class="container">
-
-    <amp-list id="searchResults" [hidden]="search.searchText == ''" width="auto" height="500" layout="fixed-height" items="Search" binding="no"
-      [src]="'https://www.omdbapi.com/?apikey=' + api.omdbKey + '&s=' + search.searchText" reset-on-refresh>
-      <div fallback class="results-fallback">Failed to load movies</div>
+    <amp-list id="searchResults" width="auto" height="500" layout="fixed-height" items="Search" binding="no"
+      [src]="search.searchText.length > 0 ? 'https://www.omdbapi.com/?apikey=' + api.omdbKey + '&s=' + search.searchText : ''"
+      reset-on-refresh>
+      <div fallback id="results-fallback">Failed to load movies</div>
       <template type="amp-mustache">
         <div class="movie-entry">
           <div class="movie-title">{{ Title }}</div>
