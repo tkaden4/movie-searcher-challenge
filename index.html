@@ -181,11 +181,11 @@
   </header>
   <div id="search">
     <input id="search-text" name="search-text" placeholder="Search movies..." type="text"
-      on="input-debounced:AMP.setState({ search: { searchText: event.value }}),searchResults.changeToLayoutContainer()"></input>
+      on="input-debounced:AMP.setState({ search: { searchText: event.value }, results: { Search: [], totalResults: null, Response: null }}),searchResults.changeToLayoutContainer()"></input>
   </div>
   <div class="container">
     <div id="results">
-      <div [text]="results.totalResults + ' results'"></div>
+      <h3 [text]="results.totalResults != null ? results.totalResults + ' results' : ''"></h3>
       <amp-list id="searchResults" width="auto" height="500" layout="fixed-height" [src]="results.Search" items="." single-item binding="no" reset-on-refresh>
         <div fallback id="results-fallback">Failed to load movies</div>
         <template type="amp-mustache">
