@@ -166,6 +166,11 @@
       font-size: 1.7em;
       font-weight: 600;
     }
+
+    .movie-details {
+      padding: 10px;
+      text-align: left;
+    }
   </style>
 
 </head>
@@ -201,7 +206,13 @@
   </div>
 
   <template id="movie-details-template" type="amp-mustache">
-    <div>{{ Plot }}</div>
+    <div class="movie-details">
+      Released: {{ Year }} <br/>
+      Genre: {{ Genre }} <br />
+      Rating: {{ Rated }} <br />
+      <div [text]="'{{ Type }}' == 'series' ? ('Total Seasons: ' + {{ totalSeasons }}) : ''"></div>
+      Runtime: {{ Runtime }}
+    </div>
   </template>
 
   <template id="movie-entry-template" type="amp-mustache">
@@ -213,12 +224,13 @@
           width="300" height="447" layout="responsive">
         </amp-img>
       </amp-img>
-      <amp-accordion animate>
+      <amp-accordion animate disable-session-states>
         <section>
           <h3>Details</h3>
-          <amp-list single-item items="." id="extra-info"
+          <amp-list single-item items="." id="{{ imdbID }}-extra-info"
             [src]="'https://www.omdbapi.com/?apikey=' + api.omdbKey + '&i={{imdbID}}'" layout="fixed-height"
-            width="auto" height="200" template="movie-details-template" binding="refresh"></amp-list>
+            width="auto" height="110" template="movie-details-template" binding="refresh">
+          </amp-list>
         </section>
       </amp-accordion>
     </div>
