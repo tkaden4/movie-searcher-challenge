@@ -10,6 +10,7 @@
   <script async custom-element="amp-list" src="https://cdn.ampproject.org/v0/amp-list-0.1.js"></script>
   <script custom-template="amp-mustache" src="https://cdn.ampproject.org/v0/amp-mustache-0.2.js" async></script>
   <script async custom-element="amp-bind" src="https://cdn.ampproject.org/v0/amp-bind-0.1.js"></script>
+  <script async custom-element="amp-accordion" src="https://cdn.ampproject.org/v0/amp-accordion-0.1.js"></script>
   <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1" />
   <title>FlickDB | Discover Movies</title>
   <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
@@ -206,18 +207,25 @@
           width="300" height="447" layout="responsive">
         </amp-img>
       </amp-img>
-      <amp-list single-item items="." id="extra-info"
-        [src]="'https://www.omdbapi.com/?apikey=' + api.omdbKey + '&i={{imdbID}}'" layout="fixed-height" width="auto"
-        height="200" template="movie-details-template" binding="refresh"></amp-list>
+      <amp-accordion>
+        <section>
+          <h3>Details</h3>
+          <amp-list single-item items="." id="extra-info"
+            [src]="'https://www.omdbapi.com/?apikey=' + api.omdbKey + '&i={{imdbID}}'" layout="fixed-height"
+            width="auto" height="200" template="movie-details-template" binding="refresh"></amp-list>
+        </section>
+      </amp-accordion>
     </div>
   </template>
 
   <div class="container">
     <div id="results">
       <h3 [text]="results.totalResults != null ? results.totalResults + ' results' : '0 results'">0 results</h3>
+
       <amp-list id="searchResults" load-more-src="next" load-more="auto" width="auto" height="500" layout="fixed-height"
         [src]="results.Search" items="." single-item template="movie-entry-template" binding="refresh">
       </amp-list>
+
     </div>
   </div>
 </body>
