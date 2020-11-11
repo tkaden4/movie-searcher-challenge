@@ -116,6 +116,11 @@
       padding: 10px;
     }
 
+    header > #title {
+      display: inline;
+      margin: 0;
+    }
+
     #results {
       text-align: center;
     }
@@ -154,10 +159,12 @@
       padding: 10px;
       background-color: #eaeaec;
       transition: opacity 1s;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
     }
 
     .movie-title {
-      font-size: 1.5em;
+      font-size: 1.7em;
+      font-weight: 600;
     }
   </style>
 
@@ -176,7 +183,6 @@
     [src]="'https://www.omdbapi.com/?apikey=' + api.omdbKey + '&s=' + search.searchText + '&page=' + (results.Page || 1)">
     <script type="application/json">
       {
-        "Page": 1,
         "Search": [],
         "totalResults": 0
       }
@@ -187,10 +193,10 @@
       src="https://raw.githubusercontent.com/tkaden4/movie-searcher-challenge/eb94a0fb4c4436b8f1d4c5e2ccca1f5ff5c3f053/movie-reel.svg"
       height="30" width="30"></amp-img>
     &nbsp;
-    <h1 style="margin: 0; display: inline;">FlickDB</h1>
+    <h1 id="title">FlickDB</h1>
   </header>
   <div id="search">
-    <input id="search-text" name="search-text" placeholder="Search movies..." type="text"
+    <input id="search-text" name="search-text" placeholder="Search movies and shows" type="text"
       on="input-debounced:AMP.setState({ search: { searchText: event.value }, results: { Search: [], totalResults: null, Response: null }}),searchResults.changeToLayoutContainer()"></input>
   </div>
 
@@ -221,11 +227,9 @@
   <div class="container">
     <div id="results">
       <h3 [text]="results.totalResults != null ? results.totalResults + ' results' : '0 results'">0 results</h3>
-
-      <amp-list id="searchResults" load-more-src="next" load-more="auto" width="auto" height="500" layout="fixed-height"
+      <amp-list id="searchResults"  width="auto" height="400" layout="fixed-height"
         [src]="results.Search" items="." single-item template="movie-entry-template" binding="refresh">
       </amp-list>
-
     </div>
   </div>
 </body>
